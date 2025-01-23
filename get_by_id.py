@@ -1,7 +1,7 @@
 from blog import Blog
 
 if __name__ == "__main__":
-    # Получаем все записи
+    # Получаем запись
     blog = Blog()
     post_id = int(input('ID поста: '))
     
