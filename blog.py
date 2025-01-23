@@ -129,16 +129,3 @@ class Blog:
     def close(self):
         """Закрывает соединение с базой данных."""
         self.conn.close()
-
-# Пример использования
-if __name__ == "__main__":
-    blog = Blog()
-
-    # Получаем все записи
-    print("Все записи в блоге:")
-    posts = blog.get_all_posts()
-    for post in posts:
-        print(f"ID: {post[0]}, Дата: {post[1]}, Текст: {post[2]}")
-
-    # Закрываем соединение с базой данных
-    blog.close() 
