@@ -2,6 +2,9 @@ from blog import Blog
 import argparse
 import sys
 import textwrap
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import tzlocal
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("python " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -18,7 +21,16 @@ if __name__ == "__main__":
     posts = blog.get_all_posts_with_pagination()
     for post in posts:
         print("|" + args.separator)
-        print(f"|ID: {post['id']}:, Дата: {post['date']}")
+        if post['timezone'] == None:
+            origin_tz = ZoneInfo(tzlocal.get_localzone_name())
+        else:
+            origin_tz = ZoneInfo(str(post['timezone']))
+        dt = datetime.fromisoformat(post['date']).replace(tzinfo=origin_tz)
+        if args.timezone == "local" or args.timezone == "":
+            dt = dt.astimezone(tz=ZoneInfo(tzlocal.get_localzone_name()))
+        else: 
+            dt = dt.astimezone(tz=ZoneInfo(args.timezone))
+        print(f"|ID: {post['id']}:, Дата: {dt}")
         print("|" + args.separator)
         content = textwrap.fill(str(post['content']), args.width)
         print("|" + "\n|".join(content.split('\n')))
