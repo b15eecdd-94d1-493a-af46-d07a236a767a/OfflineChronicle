@@ -1,6 +1,6 @@
 Установка зависимостей: pip install -r requirements.txt
 
-###python3 list.py - список записей
+### python3 list.py - список записей
 ```
 usage: python list.py [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}] [-sep SEPARATOR] [-w WIDTH] [-tz TIMEZONE]
 
@@ -21,7 +21,7 @@ options:
 
 ```
 
-###python3 add.py - добавить запись в блог.
+### python3 add.py - добавить запись в блог.
 ```
 usage: python add.py [-h] [-n NAME]
 
@@ -30,7 +30,7 @@ options:
   -n NAME, --name NAME  Название блога (default: blog)
 ```
 
-###python3 delete.py - удалить запись по id.
+### python3 delete.py - удалить запись по id.
 ```
 usage: python delete.py [-h] [-n NAME]
 
@@ -39,7 +39,7 @@ options:
   -n NAME, --name NAME  Название блога (default: blog)
 ```
 
-###python3 get_by_id.py - получить запись по id.
+### python3 get_by_id.py - получить запись по id.
 ```
 usage: python get_by_id.py [-h] [-n NAME] [-sep SEPARATOR] [-w WIDTH]
 
