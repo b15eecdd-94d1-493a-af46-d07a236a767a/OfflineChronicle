@@ -1,4 +1,5 @@
 python3 list.py - список записей
+```
 usage: python list.py [-n] [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}]
 
 options:
@@ -9,8 +10,10 @@ options:
   -p PAGE, --page PAGE  Номер страницы
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка
-
+```
 
 python3 add.py - добавить запись в блог.
+
 python3 delete.py - удалить запись по id.
+
 python3 get_by_id.py - получить запись по id.
