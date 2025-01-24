@@ -9,9 +9,9 @@ options:
   -n NAME, --name NAME  Название блога (default: blog)
   -l LIMIT, --limit LIMIT
                         Максимальное количество записей (default: 50)
-  -p PAGE, --page PAGE  Номер страницы (default: 1)
+  -p PAGE, --page PAGE  Номер страницы (default: -1)
   -s {DESC,ASC}, --sort {DESC,ASC}
-                        Сортировка (default: DESC)
+                        Сортировка (default: ASC)
   -sep SEPARATOR, --separator SEPARATOR
                         Разделитель между постами (default: ----------------------------------------)
   -w WIDTH, --width WIDTH
