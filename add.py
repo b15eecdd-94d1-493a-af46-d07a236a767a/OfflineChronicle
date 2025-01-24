@@ -11,7 +11,6 @@ if __name__ == "__main__":
     i = 0
     print("Добавьте новую запись. Используйте Ctrl-D или Ctrl-Z (windows) для сохранения.")
     text = []
-    #blog.add_column('timezone', 'TEXT')
     while True:
         try:
             line = input()

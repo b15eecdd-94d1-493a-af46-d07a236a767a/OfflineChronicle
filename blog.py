@@ -18,6 +18,9 @@ class Blog:
         self.conn.row_factory = sqlite3.Row
         self.create_table()
 
+    def set_page(self, page):
+        self.page = page
+
     def create_table(self):
         """Создает таблицу для записей блога, если она не существует."""
         query = """
@@ -54,12 +57,6 @@ class Blog:
 
         except sqlite3.Error as e:
             print(f"Ошибка при добавлении поля '{column_name}': {e}")
-
-    def add_last_update_column(self):
-        self.add_column('tags', 'TEXT')
-
-    def add_last_update_column(self):
-        self.add_column('last_update', 'TEXT')
 
     def add_post(self, content, tags = ""):
         """Добавляет новую запись в блог."""
