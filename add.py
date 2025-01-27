@@ -3,7 +3,7 @@ import argparse
 import sys
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("python " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser("python3 " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-n", "--name", help="Название блога", type=str, default="blog")
     args = parser.parse_args()
     # Добавляем запись
@@ -24,3 +24,4 @@ if __name__ == "__main__":
             post_id = blog.add_post("\n".join(text).strip())
         else:
             blog.edit_post(post_id, "\n".join(text).strip())
+        i += 1
