@@ -91,6 +91,7 @@ class Blog:
         else:
             print("Не указаны новые данные для обновления.")
             return
+        self.conn.commit()
 
     def edit_post_by_uuid(self, post_uuid, new_content=None, new_tags=None):
         return edit_post(self.get_post_by_uuid(post_uuid)['id'], new_content, new_tags)
