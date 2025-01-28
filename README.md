@@ -58,20 +58,6 @@ options:
                         Максимальная ширина строки (default: 40)
 ```
 
-
-### Получить запись по id.
-```
-usage: python3 get_by_id.py [-h] [-n NAME] [-sep SEPARATOR] [-w WIDTH]
-
-options:
-  -h, --help            show this help message and exit
-  -n NAME, --name NAME  Название блога (default: blog)
-  -sep SEPARATOR, --separator SEPARATOR
-                        Разделитель между постами (default:
-                        ----------------------------------------)
-  -w WIDTH, --width WIDTH
-                        Максимальная ширина строки (default: 40)
-```
 ### Поднять локальный сервер.
 ```
 usage: python3 server.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
