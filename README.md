@@ -124,7 +124,7 @@ options:
 ```
 ### Экспорт постов из базы данных в формат txt или json
 ```
-usage: python3 export.py [-h] [-n NAME] [-l LIMIT] [-s {DESC,ASC}] [-w WIDTH] [-tz TIMEZONE] [-f {txt,json}] [-p PATH] [-f2 {Y,N}] [-hi {Y,N}] [-htz {Y,N}]
+usage: python3 export.py [-h] [-n NAME] [-l LIMIT] [-s {DESC,ASC}] [-tz TIMEZONE] [-f {txt,json}] [-p PATH] [-f2 {Y,N}] [-hi {Y,N}] [-htz {Y,N}]
 
 options:
   -h, --help            show this help message and exit
@@ -133,8 +133,6 @@ options:
                         Максимальное количество записей в одном файле (default: unlimited)
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка (default: ASC)
-  -w WIDTH, --width WIDTH
-                        Максимальная ширина строки (default: 40)
   -tz TIMEZONE, --timezone TIMEZONE
                         Часовой пояс (local - локальный часовой пояс) (default: local)
   -f {txt,json}, --format {txt,json}
