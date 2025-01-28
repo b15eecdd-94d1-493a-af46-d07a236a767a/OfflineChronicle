@@ -4,7 +4,7 @@ example_blog создан для работы на 127.0.0.1 без доступ
 # Порядок установки
 Создайте локальное окружение: python -m example_blog_venv
 
-Перейдите в локальное окружение: source example_blog_venv
+Перейдите в локальное окружение: source example_blog_venv/bin/activate
 
 Скачайте зависимости: pip install -r requirements.txt
 
