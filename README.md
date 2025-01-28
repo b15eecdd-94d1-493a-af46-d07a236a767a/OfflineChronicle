@@ -7,8 +7,8 @@ OfflineScriptorium создан для работы на 127.0.0.1, автор �
 Активируйте локальное окружение: source example_blog_venv/bin/activate
 
 Скачайте зависимости: pip install -r requirements.txt
-
-### Список записей
+# Скрипты
+## Список записей
 ```
 usage: python3 list.py [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
@@ -36,7 +36,7 @@ options:
                         Скрыть часовой пояс? (default: N)
 ```
 
-### Добавить запись в блог.
+## Добавить запись в блог.
 ```
 usage: python3 add.py [-h] [-n NAME]
 
@@ -56,7 +56,7 @@ options:
                         Мягкое удаление (default: N)
 ```
 
-### Получить запись по id.
+## Получить запись по id.
 ```
 usage: python3 get_by_id.py [-h] [-n NAME] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
@@ -79,7 +79,8 @@ options:
                         Скрыть часовой пояс? (default: N)
 
 ```
-### Поиск
+
+## Поиск
 ```
 usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
@@ -105,7 +106,7 @@ options:
 
 ```
 
-### Лог
+## Лог
 ```
 usage: python3 get_all_log_records.py [-h] [-n NAME] [-tz TIMEZONE]
                                       [-sep SEPARATOR] [-s {DESC,ASC}]
@@ -145,6 +146,7 @@ options:
   -htz {Y,N}, --hide-timezone {Y,N}
                         Скрыть часовой пояс в .txt? (default: Y)
 ```
+
 ### Поднять локальный сервер.
 ```
 usage: python3 server.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
@@ -179,6 +181,7 @@ options:
   -l2 {Y,N}, --log {Y,N}
                         Выводить лог в консоль (default: Y)
 ```
+
 ### GUI
 ```
 usage: python3 gui.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
