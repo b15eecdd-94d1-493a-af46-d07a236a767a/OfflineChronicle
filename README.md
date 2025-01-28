@@ -66,7 +66,6 @@ options:
                         Максимальная ширина строки (default: 40)
 ```
 ### Поиск 
-Примечание: регистрозависимый.
 ```
 usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR]
                          [-w WIDTH] [-tz TIMEZONE]
@@ -85,6 +84,8 @@ options:
                         Часовой пояс (local - локальный часовой пояс) (default:
                         local)
 ```
+Примечание: поиск совершается с учётом регистра символов.
+
 ### Лог
 ```
 usage: python3 get_all_log_records.py [-h] [-n NAME] [-tz TIMEZONE]
