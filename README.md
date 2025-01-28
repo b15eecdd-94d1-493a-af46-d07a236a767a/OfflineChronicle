@@ -65,7 +65,7 @@ options:
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
 ```
-### Поиск 
+### Поиск (с учётом регистра символов)
 ```
 usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR]
                          [-w WIDTH] [-tz TIMEZONE]
@@ -84,7 +84,6 @@ options:
                         Часовой пояс (local - локальный часовой пояс) (default:
                         local)
 ```
-Примечание: поиск совершается с учётом регистра символов.
 
 ### Лог
 ```
