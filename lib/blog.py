@@ -220,9 +220,9 @@ class Blog:
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
         if search_text != None and search_tags == None:
-            return self.search_posts_by_text(self, search_text)
+            return self.search_posts_by_text(search_text)
         elif search_text == None and search_tags != None:
-            return self.search_posts_by_tag(self, search_tags)
+            return self.search_posts_by_tag(search_tags)
         elif search_text != None and search_tags != None:
             query = "SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?) AND tags LIKE ? ORDER BY id " + self.sort + ""
             cursor = self.conn.execute(query, (f'%{search_text}%',f'%{search_text}%',f'%{search_tags}%'))
