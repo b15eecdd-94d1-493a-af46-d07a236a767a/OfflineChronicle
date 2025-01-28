@@ -147,7 +147,7 @@ options:
                         Скрыть часовой пояс в .txt? (default: Y)
 ```
 
-### Поднять локальный сервер.
+### Поднять локальный HTTP-сервер.
 ```
 usage: python3 server.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
                          [-s {DESC,ASC}] [-d {1,2,3,4,5,custom}] [-p PORT]
