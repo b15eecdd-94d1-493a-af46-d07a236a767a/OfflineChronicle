@@ -65,7 +65,42 @@ options:
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
 ```
+### Поиск
+```
+usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR]
+                         [-w WIDTH] [-tz TIMEZONE]
 
+options:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  Название блога (default: blog)
+  -s {DESC,ASC}, --sort {DESC,ASC}
+                        Сортировка (default: DESC)
+  -sep SEPARATOR, --separator SEPARATOR
+                        Разделитель между постами (default:
+                        ----------------------------------------)
+  -w WIDTH, --width WIDTH
+                        Максимальная ширина строки (default: 40)
+  -tz TIMEZONE, --timezone TIMEZONE
+                        Часовой пояс (local - локальный часовой пояс) (default:
+                        local)
+```
+### Лог
+```
+usage: python3 get_all_log_records.py [-h] [-n NAME] [-tz TIMEZONE]
+                                      [-sep SEPARATOR] [-s {DESC,ASC}]
+
+options:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  Название блога (default: blog)
+  -tz TIMEZONE, --timezone TIMEZONE
+                        Часовой пояс (local - локальный часовой пояс) (default:
+                        local)
+  -sep SEPARATOR, --separator SEPARATOR
+                        Разделитель между постами (default:
+                        ----------------------------------------)
+  -s {DESC,ASC}, --sort {DESC,ASC}
+                        Сортировка (default: ASC)
+```
 ### Поднять локальный сервер.
 ```
 usage: python3 server.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
