@@ -2,9 +2,9 @@
 OfflineChronicle создан для работы на 127.0.0.1, автор отказывается от любой ответственности за понесённый ущерб в случае открытия доступа к блогу через Интернет.
 
 # Порядок установки
-Создайте локальное окружение: python3 -m example_blog_venv
+Создайте локальное окружение: python3 -m offline_chronicle_venv
 
-Активируйте локальное окружение: source example_blog_venv/bin/activate
+Активируйте локальное окружение: source offline_chronicle_venv/bin/activate
 
 Скачайте зависимости: pip install -r requirements.txt
 # Команды
