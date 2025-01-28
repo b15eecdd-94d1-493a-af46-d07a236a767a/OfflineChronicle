@@ -1,4 +1,4 @@
-from blog import Blog
+from lib.blog import Blog
 import argparse
 import sys
 
@@ -13,15 +13,20 @@ if __name__ == "__main__":
     text = []
     while True:
         try:
-            line = input()
+            if i == 0:
+                line = input('Заголовок: ')
+            elif i == 1:
+                line = input('Содержимое:\n')
+            else:
+                line = input('')
         except EOFError:
             break
-        if line:
+        if line and i > 0:
             text.append(line)
+        elif line and i == 0:
+            post = blog.add_post(line.strip(), "")
         else:
             break
-        if i == 0:
-            post_id = blog.add_post("\n".join(text).strip())
-        else:
-            blog.edit_post(post_id, "\n".join(text).strip())
+        if i > 0:
+            blog.edit_post(post['id'], new_content = "\n".join(text).strip())
         i += 1

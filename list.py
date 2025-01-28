@@ -1,4 +1,4 @@
-from blog import Blog
+from lib.blog import Blog
 import argparse
 import sys
 import textwrap
@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 import tzlocal
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("python " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser("python3 " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-n", "--name", help="Название блога", type=str, default="blog")
     parser.add_argument("-l", "--limit", help="Максимальное количество записей", type=int, default=50)
     parser.add_argument("-p", "--page", help="Номер страницы", type=int, default=-1)
@@ -44,6 +44,8 @@ if __name__ == "__main__":
             dt = dt.astimezone(tz=ZoneInfo(args.timezone))
         print(f"|ID: {post['id']}:, Дата: {dt}")
         print("|" + args.separator)
+        if post['title'] != None and post['title'].strip() != "": 
+            print("|" + post['title'])
         content = textwrap.fill(str(post['content']), args.width, replace_whitespace = False)
         print("|" + "\n|".join(content.split('\n')))
         print("|" + "-" * 40)
