@@ -10,8 +10,7 @@ local_blog создан для работы на 127.0.0.1, автор отка�
 
 ### Список записей
 ```
-usage: python3 list.py [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}]
-                       [-sep SEPARATOR] [-w WIDTH] [-tz TIMEZONE]
+usage: python3 list.py [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
 options:
   -h, --help            show this help message and exit
@@ -22,14 +21,19 @@ options:
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка (default: ASC)
   -sep SEPARATOR, --separator SEPARATOR
-                        Разделитель между постами (default:
-                        ----------------------------------------)
+                        Разделитель между постами (default: ----------------------------------------)
+  -lb LEFT_BORDER, --left-border LEFT_BORDER
+                        Граница слева (default: |)
+  -g {Y,N}, --graphics {Y,N}
+                        ASCII-графика (default: Y)
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
   -tz TIMEZONE, --timezone TIMEZONE
-                        Часовой пояс (local - локальный часовой пояс) (default:
-                        local)
-
+                        Часовой пояс (local - локальный часовой пояс) (default: local)
+  -hi {Y,N}, --hide-id {Y,N}
+                        Скрыть ID? (default: N)
+  -htz {Y,N}, --hide-timezone {Y,N}
+                        Скрыть часовой пояс? (default: N)
 ```
 
 ### Добавить запись в блог.
@@ -54,21 +58,30 @@ options:
 
 ### Получить запись по id.
 ```
-usage: python3 get_by_id.py [-h] [-n NAME] [-sep SEPARATOR] [-w WIDTH]
+usage: python3 get_by_id.py [-h] [-n NAME] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
 options:
   -h, --help            show this help message and exit
   -n NAME, --name NAME  Название блога (default: blog)
   -sep SEPARATOR, --separator SEPARATOR
-                        Разделитель между постами (default:
-                        ----------------------------------------)
+                        Разделитель между постами (default: ----------------------------------------)
+  -lb LEFT_BORDER, --left-border LEFT_BORDER
+                        Граница слева (default: |)
+  -g {Y,N}, --graphics {Y,N}
+                        ASCII-графика (default: Y)
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
+  -tz TIMEZONE, --timezone TIMEZONE
+                        Часовой пояс (local - локальный часовой пояс) (default: local)
+  -hi {Y,N}, --hide-id {Y,N}
+                        Скрыть ID? (default: N)
+  -htz {Y,N}, --hide-timezone {Y,N}
+                        Скрыть часовой пояс? (default: N)
+
 ```
 ### Поиск
 ```
-usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR]
-                         [-w WIDTH] [-tz TIMEZONE]
+usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
 options:
   -h, --help            show this help message and exit
@@ -76,13 +89,20 @@ options:
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка (default: DESC)
   -sep SEPARATOR, --separator SEPARATOR
-                        Разделитель между постами (default:
-                        ----------------------------------------)
+                        Разделитель между постами (default: ----------------------------------------)
+  -lb LEFT_BORDER, --left-border LEFT_BORDER
+                        Граница слева (default: |)
+  -g {Y,N}, --graphics {Y,N}
+                        ASCII-графика (default: Y)
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
   -tz TIMEZONE, --timezone TIMEZONE
-                        Часовой пояс (local - локальный часовой пояс) (default:
-                        local)
+                        Часовой пояс (local - локальный часовой пояс) (default: local)
+  -hi {Y,N}, --hide-id {Y,N}
+                        Скрыть ID? (default: N)
+  -htz {Y,N}, --hide-timezone {Y,N}
+                        Скрыть часовой пояс? (default: N)
+
 ```
 
 ### Лог
@@ -101,6 +121,31 @@ options:
                         ----------------------------------------)
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка (default: ASC)
+```
+### Экспорт постов из базы данных в формат txt или json
+```
+usage: python3 export.py [-h] [-n NAME] [-l LIMIT] [-s {DESC,ASC}] [-w WIDTH] [-tz TIMEZONE] [-f {txt,json}] [-p PATH] [-f2 {Y,N}] [-hi {Y,N}] [-htz {Y,N}]
+
+options:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  Название блога (default: blog)
+  -l LIMIT, --limit LIMIT
+                        Максимальное количество записей в одном файле (default: unlimited)
+  -s {DESC,ASC}, --sort {DESC,ASC}
+                        Сортировка (default: ASC)
+  -w WIDTH, --width WIDTH
+                        Максимальная ширина строки (default: 40)
+  -tz TIMEZONE, --timezone TIMEZONE
+                        Часовой пояс (local - локальный часовой пояс) (default: local)
+  -f {txt,json}, --format {txt,json}
+                        Формат (default: txt)
+  -p PATH, --path PATH  Куда сохранять? (default: export)
+  -f2 {Y,N}, --force {Y,N}
+                        Перезаписывать существующий файл? (default: N)
+  -hi {Y,N}, --hide-id {Y,N}
+                        Скрыть ID в .txt? (default: Y)
+  -htz {Y,N}, --hide-timezone {Y,N}
+                        Скрыть часовой пояс в .txt? (default: Y)
 ```
 ### Поднять локальный сервер.
 ```
