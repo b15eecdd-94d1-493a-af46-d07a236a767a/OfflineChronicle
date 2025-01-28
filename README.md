@@ -94,7 +94,7 @@ options:
 ### GUI
 ```
 usage: python3 gui.py [-h] [-n BLOGNAME] [-tz TIMEZONE] [-l LIMIT]
-                      [-s {DESC,ASC}] [-d {1,2,3,4,5}] [-p PORT] [-ro {Y,N}]
+                      [-s {DESC,ASC}]
 
 options:
   -h, --help            show this help message and exit
@@ -108,9 +108,4 @@ options:
                         (default: 50)
   -s {DESC,ASC}, --sort {DESC,ASC}
                         Сортировка (default: DESC)
-  -d {1,2,3,4,5}, --design {1,2,3,4,5}
-                        Дизайн (default: 1)
-  -p PORT, --port PORT  Порт (default: 5050)
-  -ro {Y,N}, --readonly {Y,N}
-                        Режим без возможности управлять записями (default: N)
 ```
