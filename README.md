@@ -65,7 +65,8 @@ options:
   -w WIDTH, --width WIDTH
                         Максимальная ширина строки (default: 40)
 ```
-### Поиск (регистрозависимый!)
+### Поиск 
+Примечание: регистрозависимый.
 ```
 usage: python3 search.py [-h] [-n NAME] [-s {DESC,ASC}] [-sep SEPARATOR]
                          [-w WIDTH] [-tz TIMEZONE]
