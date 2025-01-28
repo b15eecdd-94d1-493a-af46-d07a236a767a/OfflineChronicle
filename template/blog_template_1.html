@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Блог</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77aaff 3px solid;
+        }
+        header h1 {
+            text-align: center;
+            margin: 0;
+            font-size: 36px;
+        }
+        .title {
+        	font-weight: bold;
+        	font-size: 150%;
+        }
+        .post {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .post h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .post .date {
+            color: #777;
+            font-size: 14px;
+        }
+        .post .content {
+            white-space: pre-line;
+                      overflow-wrap: break-word; /* Альтернатива для word-wrap */
+            white-space: pre-wrap; /* Сохраняет переносы строк и пробелы */
+        }
+.navigation form {
+display: inline-block;
+text-align: center;
+}
+    </style>
+</head>
+<body>
+	<header>
+	{% include "header.html" %}
+	</header>
+    {% if readonly != 'Y' %}
+    	<div class="container">
+        <form method="POST" action="{{ url_for('add_post') }}">
+		<label  for="title">Заголовок:</label><br />
+        <input type="text" id="title" name="title" style="width:100%;"></textarea><br />
+        <label  for="content">Содержание:</label><br />
+        <textarea id="content" rows="10" name="content" style="width:100%;"></textarea><br />
+        
+        <button style="text-align: center; margin: 0;" type="submit">➕ Новый пост</button>
+    </form>
+    {% endif %}
+    	</div>
+        <div class="container">
+        {% for post in posts %}
+        <div class="post">
+            <h2>Пост #{{ post.id }}</h2>
+            <div class="date">{{ post.date }}</div>
+            <div class="title">{{ post.title }}</div>
+            <div class="content">{{ post.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+            <div class="navigation">
+            <form action="/page/{{ page - 1 }}">
+            <button class="nav-button" id="prev-button" {% if page <= 1 %} disabled {% endif %}>
+            ⬅️ Назад
+            </button>
+            </form>
+            <form action="/page/{{ page + 1 }}">
+            <button class="nav-button" id="next-button" {% if page >= total_pages %} disabled {% endif %}>
+            Вперёд ➡️
+            </button>
+            </form>
+        </div>
+</body>
+</html> 

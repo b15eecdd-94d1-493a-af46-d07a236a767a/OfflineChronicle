@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Основные стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #6200ea;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+.new-post-button {
+    background-color: #03dac6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.new-post-button:hover {
+    background-color: #018786;
+}
+
+.container {
+    padding: 20px;
+}
+
+.post {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post h2 {
+    margin-top: 0;
+    color: #6200ea;
+}
+
+.date {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.content {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.navigation {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nav-button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #3700b3;
+}
+
+.nav-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+/* Темная тема */
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-theme header {
+    background-color: #1e1e1e;
+}
+
+body.dark-theme .post {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .new-post-button,
+body.dark-theme .nav-button {
+    background-color: #bb86fc;
+    color: #121212;
+}
+
+body.dark-theme .nav-button:hover {
+    background-color: #3700b3;
+}
+
+body.dark-theme .date {
+    color: #a0a0a0;
+}
+/* Анимация загрузки */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.post {
+    animation: fadeIn 0.5s ease-in-out;
+}
+.new-post-button, .nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.new-post-button:hover, .nav-button:hover {
+    transform: scale(1.05);
+}
+
+.new-post-button:active, .nav-button:active {
+    transform: scale(0.95);
+}
+.post {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.post:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+#scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 50%;
+    display: none;
+    transition: background-color 0.3s ease;
+}
+
+#scroll-to-top:hover {
+    background-color: #3700b3;
+}
+.title {
+	font-weight: bold;
+	font-size: 150%;
+}
+.navigation form {
+display: inline-block; 
+}
+</style>
+<script>
+    let page = 1;
+    const container = document.querySelector('.container');
+
+    // Функция для загрузки постов
+    async function loadPosts() {
+        const response = await fetch(`/api/posts?page=${page}`);
+        const posts = await response.json();
+
+        posts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <h2>ID ${post.id}</h2>
+                <div class="date">[${post.date}]</div>
+                <div class="content">${post.content}</div>
+            `;
+            container.appendChild(postElement);
+        });
+
+        page++;
+    }
+
+    // Загрузка постов при прокрутке
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            loadPosts();
+        }
+    });
+
+    // Первоначальная загрузка
+    loadPosts();
+</script>
+    <script>
+        // Переключение темы
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            themeToggle.textContent = body.classList.contains('dark-theme') ? '☀️' : '🌙';
+        });
+    </script>
+<script>
+    // Кнопка "Вверх"
+    const scrollToTopButton = document.getElementById('scroll-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollToTopButton.style.display = 'block';
+        } else {
+            scrollToTopButton.style.display = 'none';
+        }
+    });
+
+    scrollToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+</head>
+<body>
+<header>
+{% include "header.html" %}
+</header>
+<button id="scroll-to-top" title="Наверх">↑</button>
+{% include "body.html" %}
+
+</body>
+</html>

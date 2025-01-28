@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог</title>
+    <style>
+        /* Основные стили */
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #d4d4d4;
+            --primary-color: #4ec9b0;
+            --secondary-color: #569cd6;
+            --card-bg: #252526;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --border-radius: 5px;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .title {
+        	font-weight: bold;
+        	font-size: 150%;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .post {
+            background-color: var(--card-bg);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .post h2 {
+            margin-top: 0;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        .post .date {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .post .content {
+            white-space: pre-line;
+            color: var(--text-color);
+                                 overflow-wrap: break-word; /* Альтернатива для word-wrap */
+            white-space: pre-wrap; /* Сохраняет переносы строк и пробелы */
+        }
+
+        .post .content::before {
+            content: '> ';
+            color: var(--primary-color);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .post {
+                padding: 15px;
+            }
+        }
+.navigation form {
+display: inline-block; 
+color: white;
+}
+.navigation {
+text-align: center;
+}
+.nav-button {
+    background-color: var(--card-bg);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 25px;
+    margin: 0 10px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Блог</h1>
+    </header>
+    {% if readonly != 'Y' %}
+    	<div class="container">
+        <form method="POST" action="{{ url_for('add_post') }}">
+		<label  for="title">Заголовок:</label><br />
+        <input type="text" id="title" name="title" style="background-color:var(--card-bg); color: white;  width:100%;"></textarea><br />
+        <label  for="content">Содержание:</label><br />
+        <textarea id="content" rows="10" name="content" style="background-color:var(--card-bg); color: white; width:100%;"></textarea><br />
+        
+        <button style="text-align: center; margin: 0;" type="submit">➕ Новый пост</button>
+    </form>
+    {% endif %}
+    <div class="container">
+        {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.id }}</h2>
+            <div class="date">[{{ post.date }}]</div>
+            <div class="title">{{ post.title }}</div>
+            <div class="content">{{ post.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+                                <!-- Кнопки перелистывания -->
+        <div class="navigation">
+            <form"action="/page/{{ page - 1 }}">
+            <button class="nav-button" id="prev-button" {% if page <= 1 %} disabled {% endif %}>
+            ⬅ Назад
+            </button>
+            </form>
+            <form action="/page/{{ page + 1 }}">
+            <button class="nav-button" id="next-button" {% if page >= total_pages %} disabled {% endif %}>
+            Вперёд ➡
+            </button>
+            </form>
+        </div>
+</body>
+</html>

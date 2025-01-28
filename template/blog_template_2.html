@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Блог</title>
+    <style>
+        /* Основные стили */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --primary-color: #007bff;
+            --card-bg: #f9f9f9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #f9f9f9;
+            --card-bg: #2a2a2a;
+            --shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .title {
+        	font-weight: bold;
+        	font-size: 150%;
+        }
+        .container, .navigation {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .theme-switcher:hover {
+            background-color: #0056b3;
+        }
+
+        .post {
+            background-color: var(--card-bg);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .post h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .post .date {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .post .content {
+            white-space: pre-line;
+            line-height: 1.6;
+                      overflow-wrap: break-word; /* Альтернатива для word-wrap */
+            white-space: pre-wrap; /* Сохраняет переносы строк и пробелы */
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: #0056b3;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+.navigation form {
+display: inline-block;
+text-align: center; 
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Блог</h1>
+    </header>
+
+    <button class="theme-switcher" onclick="toggleTheme()">🌙</button>
+    {% if readonly != 'Y' %}
+    	<div class="container">
+        <form method="POST" action="{{ url_for('add_post') }}">
+		<label  for="title">Заголовок:</label><br />
+        <input type="text" id="title" name="title" style="width:100%;"></textarea><br />
+        <label  for="content">Содержание:</label><br />
+        <textarea id="content" rows="10" name="content" style="width:100%;"></textarea><br />
+        
+        <button style="text-align: center; margin: 0;" type="submit">➕ Новый пост</button>
+    </form>
+    {% endif %}
+    <div class="container">
+        {% for post in posts %}
+        <div class="post">
+            <h2>Пост #{{ post.id }}</h2>
+            <div class="date">{{ post.date }}</div>
+            <div class="title">{{ post.title }}</div>
+            <div class="content">{{ post.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+            <div class="navigation">
+            <form action="/page/{{ page - 1 }}">
+            <button class="nav-button" id="prev-button" {% if page <= 1 %} disabled {% endif %}>
+            ⬅️ Назад
+            </button>
+            </form>
+            <form action="/page/{{ page + 1 }}">
+            <button class="nav-button" id="next-button" {% if page >= total_pages %} disabled {% endif %}>
+            Вперёд ➡️
+            </button>
+            </form>
+        </div>
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            body.dataset.theme = body.dataset.theme === "dark" ? "light" : "dark";
+            const themeButton = document.querySelector('.theme-switcher');
+            themeButton.textContent = body.dataset.theme === "dark" ? "☀️" : "🌙";
+        }
+
+        // Кнопка "Наверх"
+        window.onscroll = function() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

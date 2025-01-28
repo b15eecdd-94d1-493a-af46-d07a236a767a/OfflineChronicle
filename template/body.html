@@ -1,0 +1,38 @@
+
+    <header>
+        <h1>Блог</h1>
+    </header>
+    {% if readonly != 'Y' %}
+    	<div class="container">
+        <form method="POST" action="{{ url_for('add_post') }}">
+		<label  for="title">Заголовок:</label><br />
+        <input type="text" id="title" name="title" style="width:100%;"></textarea><br />
+        <label  for="content">Содержание:</label><br />
+        <textarea id="content" rows="10" name="content" style="width:100%;"></textarea><br />
+        
+        <button style="text-align: center; margin: 0;" type="submit">➕ Новый пост</button>
+    </form>
+    {% endif %}
+        <div class="container">
+        {% for post in posts %}
+        <div class="post">
+            <h2>ID {{ post.id }}</h2>
+            <div class="date">[{{ post.date }}]</div>
+            <div class="title">{{ post.title }}</div>
+            <div class="content">{{ (post.content).replace('\n', '<br>') }}</div>
+        </div>
+        {% endfor %}
+        </div>
+                            <!-- Кнопки перелистывания -->
+        <div class="navigation">
+            <form"action="/page/{{ page - 1 }}">
+            <button class="nav-button" id="prev-button" {% if page <= 1 %} disabled {% endif %}>
+            ⬅️ Назад
+            </button>
+            </form>
+            <form action="/page/{{ page + 1 }}">
+            <button class="nav-button" id="next-button" {% if page >= total_pages %} disabled {% endif %}>
+            Вперёд ➡️
+            </button>
+            </form>
+        </div>
