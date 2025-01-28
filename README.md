@@ -8,7 +8,7 @@ OfflineScriptorium создан для работы на 127.0.0.1, автор �
 
 Скачайте зависимости: pip install -r requirements.txt
 # Команды
-### Список записей
+### Получить список записей
 ```
 usage: python3 list.py [-h] [-n NAME] [-l LIMIT] [-p PAGE] [-s {DESC,ASC}] [-sep SEPARATOR] [-lb LEFT_BORDER] [-g {Y,N}] [-w WIDTH] [-tz TIMEZONE] [-hi {Y,N}] [-htz {Y,N}]
 
