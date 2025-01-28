@@ -14,7 +14,6 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--name", help="Название блога", type=str, default="blog")
     parser.add_argument("-l", "--limit", help="Максимальное количество записей в одном файле", type=str, default='unlimited')
     parser.add_argument("-s", "--sort", help="Сортировка", type=str, choices=["DESC", "ASC"], default="ASC")
-    parser.add_argument("-w", "--width", help="Максимальная ширина строки", type=int, default=40)
     parser.add_argument("-tz", "--timezone", help="Часовой пояс (local - локальный часовой пояс)", type=str, default="local")
     parser.add_argument("-f", "--format", help="Формат", type=str, choices=['txt', 'json'], default="txt")
     parser.add_argument("-p", "--path", help="Куда сохранять?", type=str, default="export")
@@ -69,7 +68,7 @@ if __name__ == "__main__":
             export_file_path = args.path + "/" + args.name + ".txt"
             if args.force != 'Y' and Path(export_file_path).exists():
                 raise Exception("Файл " + export_file_path + " уже существует, " +
-                " используйте флаг --force, если хотите принудительно перезаписать файл.")
+                " используйте флаг --force с параметром Y, если хотите принудительно перезаписать файл.")
             with open(export_file_path, "w", encoding="utf-8") as file:
                 file.write(txt)
         else:
@@ -104,7 +103,7 @@ if __name__ == "__main__":
                 export_file_path = args.path + "/" + args.name + "_" + str(page) + ".txt"
                 if args.force != 'Y' and Path(export_file_path).exists():
                     raise Exception("Файл " + export_file_path + " уже существует, " +
-                    " используйте флаг --force, если хотите принудительно перезаписать файл.")
+                    " используйте флаг --force с параметром Y, если хотите принудительно перезаписать файл.")
                 with open(export_file_path, "w", encoding="utf-8") as file:
                     file.write(txt)
                 page += 1
@@ -113,7 +112,7 @@ if __name__ == "__main__":
             export_file_path = args.path + "/" + args.name + ".json"
             if args.force != 'Y' and Path(export_file_path).exists():
                 raise Exception("Файл " + export_file_path + " уже существует, " +
-                " используйте флаг --force, если хотите принудительно перезаписать файл.")
+                " используйте флаг --force с параметром Y, если хотите принудительно перезаписать файл.")
             with open(export_file_path, "w", encoding="utf-8") as file:
                 posts = [dict(post) for post in posts]
                 file.write(json.dumps(posts, indent=4))
@@ -125,7 +124,7 @@ if __name__ == "__main__":
                 export_file_path = args.path + "/" + args.name + "_" + i + ".json"
                 if args.force != 'Y' and Path(export_file_path).exists():
                     raise Exception("Файл " + export_file_path + " уже существует, " +
-                    " используйте флаг --force, если хотите принудительно перезаписать файл.")
+                    " используйте флаг --force с параметром Y, если хотите принудительно перезаписать файл.")
                 with open(export_file_path, "w", encoding="utf-8") as file:
                     posts = [dict(post) for post in posts]
                     file.write(json.dumps(posts, indent=4))    
