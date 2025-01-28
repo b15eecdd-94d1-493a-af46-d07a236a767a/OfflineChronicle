@@ -135,8 +135,8 @@ class BlogApp(QWidget):
             
             title_label = QLabel('№' + str(post['id']) + ' ' + str(post['date']))
             if post['title'] != None and post['title'].strip() != "":
-                title_label.setText(title_label.text() + '/n' + post['title'])
-            title_label.setStyleSheet("font-size: 150%; font-weight: bold;")
+                title_label.setText(title_label.text() + '<br /><b>' + post['title'] + '</b>')
+            #title_label.setStyleSheet("font-size: 150%;")
             post_layout.addWidget(title_label)
 
             content_label = QLabel(post['content'])
@@ -168,7 +168,10 @@ class BlogApp(QWidget):
             post_id = self.blog.add_post(title, content)
             self.title_input.clear()
             self.content_input.clear()
-            self.show_posts(self.page)  # Обновляем отображение
+            if self.sort == 'DESC':
+                self.show_posts(1)  # Обновляем отображение
+            else:
+                self.show_posts(self.total_pages)  # Обновляем отображение
         else:
             QMessageBox.warning(self, 'Ошибка', 'Текст записи не может быть пустым.')
 
@@ -178,8 +181,6 @@ if __name__ == '__main__':
     parser.add_argument("-tz", "--timezone", help="Часовой пояс (local - локальный часовой пояс)", type=str, default="local")
     parser.add_argument("-l", "--limit", help="Максимальное количество постов на одной странице", type=int, default=50)
     parser.add_argument("-s", "--sort", help="Сортировка", type=str, choices=["DESC", "ASC"], default="DESC")
-    parser.add_argument("-p", "--port", help="Порт", type=int, default=5050)
-    parser.add_argument("-ro", "--readonly", help="Режим без возможности управлять записями", type=str, choices=["Y", "N"], default="N")
     args = parser.parse_args()
     app = QApplication(sys.argv)
     # Получаем информацию о DPI экрана
