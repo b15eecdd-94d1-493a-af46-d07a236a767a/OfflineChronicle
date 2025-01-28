@@ -89,19 +89,6 @@ class BlogApp(QWidget):
 
         self.setLayout(main_layout)
 
-        # Пример начальных записей
-        """
-        self.posts = [
-            {'title': 'Запись 1', 'content': 'Это текст первой записи.'},
-            {'title': 'Запись 2', 'content': 'Это текст второй записи.'},
-            {'title': 'Запись 3', 'content': 'Это текст третьей записи.'},
-            {'title': 'Запись 4', 'content': 'Это текст четвертой записи.'},
-            {'title': 'Запись 5', 'content': 'Это текст пятой записи.'},
-            {'title': 'Запись 6', 'content': 'Это текст шестой записи.'},
-        ]
-        """
-        #self.current_page = 0
-        #self.posts_per_page = 3  # Количество записей на одной странице
         self.show_posts(1)
 
     def show_posts(self, page):
@@ -191,7 +178,6 @@ if __name__ == '__main__':
     parser.add_argument("-tz", "--timezone", help="Часовой пояс (local - локальный часовой пояс)", type=str, default="local")
     parser.add_argument("-l", "--limit", help="Максимальное количество постов на одной странице", type=int, default=50)
     parser.add_argument("-s", "--sort", help="Сортировка", type=str, choices=["DESC", "ASC"], default="DESC")
-    parser.add_argument("-d", "--design", help="Дизайн", type=int, choices=[1,2,3,4,5], default=1)
     parser.add_argument("-p", "--port", help="Порт", type=int, default=5050)
     parser.add_argument("-ro", "--readonly", help="Режим без возможности управлять записями", type=str, choices=["Y", "N"], default="N")
     args = parser.parse_args()
