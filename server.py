@@ -6,22 +6,19 @@ import re
 # Путь к каталогу, в котором нужно искать файлы
 directory = 'template'
 
-# Регулярное выражение для поиска файлов с названием blog_template_{num}.html
+# Регулярное выражение для поиска файлов с названием blog_template_{name}.html
 pattern = re.compile(r'blog_template_([a-zA-Z0-9]+)\.html')
 
-# Список для хранения найденных чисел {num}
 designs = []
 # Проходим по всем файлам в каталоге
 for filename in os.listdir(directory):
     # Проверяем, соответствует ли имя файла шаблону
     match = pattern.match(filename)
     if match:
-        # Если соответствует, извлекаем число и добавляем его в список
+        # Если соответствует, извлекаем название и добавляем его в список
         designs.append(match.group(1))
 designs = sorted(designs)
 default_design = designs[0]
-# Количество найденных файлов
-
 
 parser = argparse.ArgumentParser("python3 " + sys.argv[0], formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", "--blogname", help="Название блога", type=str, default="blog")
