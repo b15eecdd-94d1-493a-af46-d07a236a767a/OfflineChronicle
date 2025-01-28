@@ -16,7 +16,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # Получаем записи
     blog = Blog(args.name, sort=args.sort)
-    search_text = input('Строка для поиска: ')
+    print('Поиск совершается с учётом регистра символов!')
+    search_text = input('Что ищешь? ')
     
     posts = blog.search_posts(search_text)
     
