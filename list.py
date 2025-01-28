@@ -13,10 +13,20 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--page", help="Номер страницы", type=int, default=-1)
     parser.add_argument("-s", "--sort", help="Сортировка", type=str, choices=["DESC", "ASC"], default="ASC")
     parser.add_argument("-sep", "--separator", help="Разделитель между постами", type=str, default="-" * 40)
+    parser.add_argument("-lb", "--left-border", help="Граница слева", type=str, default="|")
+    parser.add_argument("-g", "--graphics", help="ASCII-графика", type=str, choices=["Y", "N"], default="Y")
     parser.add_argument("-w", "--width", help="Максимальная ширина строки", type=int, default=40)
     parser.add_argument("-tz", "--timezone", help="Часовой пояс (local - локальный часовой пояс)", type=str, default="local")
+    parser.add_argument("-hi", "--hide-id", help="Скрыть ID?", type=str, choices=["Y","N"], default="N")
+    parser.add_argument("-htz", "--hide-timezone", help="Скрыть часовой пояс?", type=str, choices=["Y","N"], default="N")
     args = parser.parse_args()
     # Получаем все записи
+    if args.separator == "" and args.left_border == "":
+        args.graphics = "N"
+    if args.graphics == 'Y':
+        left_border = args.left_border
+    else:
+        left_border = ''
     blog = Blog(args.name, args.limit, args.page, args.sort)
     total_pages = blog.get_total_pages()
     if args.page == -1:
@@ -32,7 +42,8 @@ if __name__ == "__main__":
         else:
             posts = blog.get_all_posts_with_pagination(args.limit, 1)
     for post in posts:
-        print("|" + args.separator)
+        if args.graphics == 'Y':
+            print(left_border + args.separator)
         if post['timezone'] == None:
             origin_tz = ZoneInfo(tzlocal.get_localzone_name())
         else:
@@ -42,14 +53,21 @@ if __name__ == "__main__":
             dt = dt.astimezone(tz=ZoneInfo(tzlocal.get_localzone_name()))
         else: 
             dt = dt.astimezone(tz=ZoneInfo(args.timezone))
-        print(f"|ID: {post['id']}:, Дата: {dt}")
-        print("|" + args.separator)
+        if args.hide_timezone == 'Y':
+            dt = dt.strftime('%Y-%m-%d %H:%M:%S')
+        if args.hide_id == 'Y':
+            print(f"{left_border}{dt}")
+        else:
+            print(f"{left_border}ID: {post['id']}, Дата: {dt}")
+        if args.graphics == 'Y':
+            print(left_border + args.separator)
         if post['title'] != None and post['title'].strip() != "": 
-            print("|" + post['title'])
+            print(left_border + post['title'])
         content = textwrap.fill(str(post['content']), args.width, replace_whitespace = False)
-        print("|" + "\n|".join(content.split('\n')))
-        print("|" + "-" * 40)
-        print("|")
+        print(left_border + f"\n{left_border}".join(content.split('\n')))
+        if args.graphics == 'Y':
+            print(left_border + args.separator)
+        print(left_border)
     print('Количество страниц: ' + str(blog.get_total_pages()))
     print('Количество записей: ' + str(blog.get_total_posts()))
     blog.close() 

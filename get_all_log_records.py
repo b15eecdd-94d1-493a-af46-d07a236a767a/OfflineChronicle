@@ -29,10 +29,10 @@ if __name__ == "__main__":
             dt = dt.astimezone(tz=ZoneInfo(tzlocal.get_localzone_name()))
         else: 
             dt = dt.astimezone(tz=ZoneInfo(args.timezone))
-        print(f"|ID: {log_record['id']}:, Дата: {dt}")
+        print(f"|ID: {log_record['id']}, Дата: {dt}")
         print("|" + args.separator)
         print(f"|Событие: " + log_record['action'] + f", пост №{log_record['post_id']}")
-        print("|" + "-" * 40)
+        print("|" + args.separator)
         print("|")
     print('Записей: ' + str(len(all_log_records)))
     blog.close() 
