@@ -13,6 +13,7 @@ from flask import jsonify
 if environ.get('log') == 'N':
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
+
 def print_sqlite_rows(rows):
     for row in rows:
         print(dict(row))
@@ -22,6 +23,7 @@ def sqlite_rows_to_dict(rows):
     for row in rows:
         new_rows.append(dict(row))
     return new_rows
+
 app = Flask(__name__, template_folder='../template')
 app.config['blogname'] = environ.get('blogname')
 app.config['timezone'] = environ.get('timezone')
@@ -31,6 +33,8 @@ app.config['design'] = str(environ.get('design'))
 app.config['readonly'] = environ.get('readonly')
 app.config['localhost'] = environ.get('localhost')
 app.config['admin_ip'] = environ.get('admin_ip').split()
+app.config['debug'] = environ.get('debug')
+
 @app.route('/',  defaults={'page': 1, 'sort': 'DEFAULT'})
 @app.route("/index", defaults={'page': 1, 'sort': 'DEFAULT'})
 @app.route('/page/<int:page>', defaults={'sort': 'DEFAULT'})
@@ -98,12 +102,39 @@ def add_post():
     
     return render_template('add_post.html')
 
+"""
+@app.route("/search", defaults={'page': 1, 'sort': 'DEFAULT'})
+def search(search, page, sort):
+    if app.config['localhost'] == 'Y' and request.remote_addr != '127.0.0.1':
+        return render_template("only_localhost.html", ip = request.remote_addr)
+    if sort == 'DEFAULT':
+        sort = app.config['sort']
+    blog = Blog(app.config['blogname'], limit, page, sort)
+    posts = blog.search_posts(request.args.get('text'))
+    posts = [dict(post) for post in posts]
+    for index_post, post in enumerate(posts):
+        if post['timezone'] == None:
+            origin_tz = ZoneInfo(tzlocal.get_localzone_name())
+        else:
+            origin_tz = ZoneInfo(str(post['timezone']))
+        dt = datetime.fromisoformat(post['date']).replace(tzinfo=origin_tz)
+        if app.config['timezone'] == "local" or app.config['timezone'] == "":
+            dt = dt.astimezone(tz=ZoneInfo(tzlocal.get_localzone_name()))
+        else: 
+            dt = dt.astimezone(tz=ZoneInfo(app.config['timezone']))
+        posts[index_post]['date'] = dt
+    return render_template("blog_template_" + app.config['design'] + ".html", 
+    posts=posts, page=page, sort=sort, total_pages=total_pages, blogname=app.config['blogname'], readonly=app.config['readonly'])
+ """
+    
 @app.route("/my_ip", methods=['GET', 'POST'])
 def get_my_ip():
     return render_template('get_my_ip.html', ip = request.remote_addr)
 
 if __name__ == 'main':
-    app.run(debug=True, port=args.port)
-    
+    if app.config['debug'] == 'Y':
+        app.run(debug=True, port=args.port)
+    else:
+        app.run(debug=False, port=args.port)
     
     

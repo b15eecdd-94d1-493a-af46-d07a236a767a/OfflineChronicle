@@ -20,8 +20,8 @@ class Blog:
         self.conn.row_factory = sqlite3.Row
         self.create_posts_table()
         self.create_posts_log_table()
-        self.add_column('title', 'TEXT')
-        self.add_column('deleted', 'INTEGER DEFAULT 0')
+        #self.add_column('title', 'TEXT')
+        #self.add_column('deleted', 'INTEGER DEFAULT 0')
 
     def set_page(self, page):
         self.page = page
@@ -151,8 +151,8 @@ class Blog:
         """Возвращает все записи из блога."""
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
-        query = "SELECT * FROM posts ORDER BY id " + self.sort
-        cursor = self.conn.execute(query)
+        query = "SELECT * FROM posts WHERE deleted = ? ORDER BY id " + self.sort
+        cursor = self.conn.execute(query, (0,))
         posts = cursor.fetchall()
         return posts
         
@@ -165,14 +165,14 @@ class Blog:
         return log_records
 
     def get_last_post(self):
-        """Возвращает все записи из блога."""
-        query = "SELECT * FROM posts ORDER BY id DESC LIMIT 1"
-        cursor = self.conn.execute(query)
+        """Возвращает последнюю запись из блога."""
+        query = "SELECT * FROM posts WHERE deleted = ? ORDER BY id DESC LIMIT 1"
+        cursor = self.conn.execute(query, (0,))
         post = cursor.fetch()
         return post
         
     def get_last_update(self):
-        """Возвращает все записи из блога."""
+        """Возвращает дату последнего измнения в блоге."""
         query = "SELECT * FROM posts_log ORDER BY id DESC LIMIT 1"
         cursor = self.conn.execute(query)
         last_log_record = cursor.fetchone()
@@ -194,24 +194,24 @@ class Blog:
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
         offset = (page - 1) * limit
-        query = "SELECT * FROM posts ORDER BY id " + self.sort + " LIMIT ? OFFSET ?"
-        cursor = self.conn.execute(query, (limit, offset))
+        query = "SELECT * FROM posts WHERE deleted = ? ORDER BY id " + self.sort + " LIMIT ? OFFSET ?"
+        cursor = self.conn.execute(query, (0, limit, offset))
         posts = cursor.fetchall()
         return posts
 
     def get_post_by_id(self, post_id):
         """Возвращает запись по её ID."""
-        query = "SELECT * FROM posts WHERE id = ?"
+        query = "SELECT * FROM posts WHERE deleted = ? AND id = ?"
         """Запятая после post_id нужна для того, чтобы передавлся кортеж"""
-        cursor = self.conn.execute(query, (post_id,))
+        cursor = self.conn.execute(query, (0, post_id,))
         post = cursor.fetchone()
         return post
 
     def get_post_by_uuid(self, post_uuid):
         """Возвращает запись по её UUID."""
-        query = "SELECT * FROM posts WHERE uuid = ?"
+        query = "SELECT * FROM posts WHERE deleted = ? AND uuid = ?"
         """Запятая после post_uuid нужна для того, чтобы передавлся кортеж"""
-        cursor = self.conn.execute(query, (post_uuid,))
+        cursor = self.conn.execute(query, (0, post_uuid,))
         post = cursor.fetchone()
         return post
 
@@ -224,16 +224,16 @@ class Blog:
         elif search_text == None and search_tags != None:
             return self.search_posts_by_tag(search_tags)
         elif search_text != None and search_tags != None:
-            query = "SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?) AND tags LIKE ? ORDER BY id " + self.sort + ""
-            cursor = self.conn.execute(query, (f'%{search_text}%',f'%{search_text}%',f'%{search_tags}%'))
+            query = "SELECT * FROM posts WHERE deleted = ? AND (title LIKE ? OR content LIKE ?) AND tags LIKE ? ORDER BY id " + self.sort + ""
+            cursor = self.conn.execute(query, (0, f'%{search_text}%',f'%{search_text}%',f'%{search_tags}%'))
             return cursor.fetchall()
 
     def search_posts_by_text(self, search_text):
         """Ищет записи, содержащие указанный текст."""
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
-        query = "SELECT * FROM posts WHERE title LIKE ? OR content LIKE ? ORDER BY id " + self.sort + ""
-        cursor = self.conn.execute(query, (f'%{search_text}%', f'%{search_text}%'))
+        query = "SELECT * FROM posts WHERE deleted = ? AND (title LIKE ? OR content LIKE ?) ORDER BY id " + self.sort + ""
+        cursor = self.conn.execute(query, (0, f'%{search_text}%', f'%{search_text}%'))
         posts = cursor.fetchall()
         return posts
 
@@ -241,8 +241,8 @@ class Blog:
         """Ищет записи, содержащие указанный текст."""
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
-        query = "SELECT * FROM posts WHERE title LIKE ? ORDER BY id " + self.sort + ""
-        cursor = self.conn.execute(query, (f'%{search_title}%'))
+        query = "SELECT * FROM posts WHERE deleted = ? AND title LIKE ? ORDER BY id " + self.sort + ""
+        cursor = self.conn.execute(query, (0, f'%{search_title}%'))
         posts = cursor.fetchall()
         return posts
         
@@ -254,14 +254,16 @@ class Blog:
         """
         if self.sort != 'ASC' and self.sort != 'DESC':
             self.sort = 'DESC'
-        query = "SELECT * FROM posts WHERE tags LIKE ? ORDER BY id " + self.sort + ""
-        cursor = self.conn.execute(query, (f'%{tag}%',))
+        query = "SELECT * FROM posts WHERE deleted = ? AND tags LIKE ? ORDER BY id " + self.sort + ""
+        cursor = self.conn.execute(query, (0, f'%{tag}%',))
         posts = cursor.fetchall()
         return posts
 
     def delete_post(self, post_id):
         """Удаляет запись по её ID."""
         post = self.get_post_by_id(post_id)
+        if post == None:
+            raise Exception('Нету поста с таким ID.')
         if self.soft_deletion == True:
             last_update = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             query = "UPDATE posts SET deleted = ?, last_update = ? WHERE id = ?"
@@ -269,7 +271,6 @@ class Blog:
             self.add_log_record(post['id'], post['uuid'], 'soft delete')
         else:
             query = "DELETE FROM posts WHERE id = ?"
-            """Запятая после post_id нужна для того, чтобы передавлся кортеж"""
             self.conn.execute(query, (post_id,))
             self.conn.commit()
             self.add_log_record(post['id'], post['uuid'], 'delete')
