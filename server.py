@@ -32,10 +32,24 @@ parser.add_argument("-h2", "--host", help="Хост", type=str, default="127.0.0
 parser.add_argument("-lh", "--localhost", help="Запретить доступ из внешней сети", type=str, choices=["Y", "N"], default="Y")
 parser.add_argument("-ai", "--admin-ip", help="IP-адрес администратора (допустимо перечислять через пробел)", type=str, default="127.0.0.1")
 parser.add_argument("-l2", "--log", help="Выводить лог в консоль", type=str, choices=["Y", "N"], default="Y")
+#parser.add_argument("-d2", "--debug", help="Режим отладки", type=str, choices=["Y", "N"], default="N")
 
 args = parser.parse_args()
 args = vars(args)
 new_env = {**os.environ}
 for arg_name in args:
     new_env[arg_name] = str(args[arg_name])
-flask = subprocess.run(['flask', '--app', 'lib/flask_server', 'run', '--host', str(args['host']), '--port', str(args['port'])], env=new_env)
+if "debug" in new_env:
+    if new_env['debug'] == 'Y':
+        new_env['FLASK_DEBUG'] = "1"
+        debug_mode = '--debug'
+    else:
+        new_env['FLASK_DEBUG'] = "0"
+        new_env['debug'] = "N"
+        debug_mode = '--no-debug'   
+else:
+    new_env['FLASK_DEBUG'] = "0"
+    new_env['debug'] = "N"
+    debug_mode = '--no-debug'      
+
+flask = subprocess.run(['flask', debug_mode, '--app', 'lib/flask_server', 'run', '--host', str(args['host']), '--port', str(args['port'])], env=new_env)

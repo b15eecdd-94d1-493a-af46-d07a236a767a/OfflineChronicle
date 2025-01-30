@@ -27,6 +27,8 @@ if __name__ == "__main__":
     blog = Blog(args.name)
     post_id = int(input('ID поста: '))
     post = blog.get_post_by_id(post_id)
+    if post == None:
+        raise Exception('Нету поста с таким ID.')
     if post['timezone'] == None:
         origin_tz = ZoneInfo(tzlocal.get_localzone_name())
     else:
