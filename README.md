@@ -2,7 +2,23 @@
 OfflineChronicle создан для работы на 127.0.0.1, автор отказывается от любой ответственности за понесённый ущерб в случае открытия доступа к блогу через Интернет.
 
 # Порядок установки
-Скачайте зависимости: pip install -r requirements.txt
+
+## Debian
+1. Скачайте python3: apt install python3
+2. Скачайте zip-архив с OfflineChronicle: https://github.com/b15eecdd-94d1-493a-af46-d07a236a767a/OfflineChronicle/archive/refs/heads/main.zip
+3. Распакуйте в любой каталог.
+4. Откройте консоль и выберите каталог в котором находится OfflineChronicle.
+5. Скачайте зависимости: pip install -r requirements.txt
+6. Запускайте любой скрипт командой python3.
+   
+## Windows
+1. Скачайте python3 с официального сайта.
+2. Установите.
+3. Скачайте zip-архив с OfflineChronicle: https://github.com/b15eecdd-94d1-493a-af46-d07a236a767a/OfflineChronicle/archive/refs/heads/main.zip
+4. Распакуйте в любой каталог.
+5. Откройте консоль и выберите каталог в котором находится OfflineChronicle.
+6. Выполните pip install -r requirements.txt.
+7. Запускайте любой скрипт командой python.
 
 # Команды
 ### Получить список записей
