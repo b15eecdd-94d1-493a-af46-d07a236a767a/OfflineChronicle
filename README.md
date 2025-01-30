@@ -4,13 +4,11 @@ OfflineChronicle создан для работы на 127.0.0.1, автор о�
 # Порядок установки
 
 ## Debian
-1. Скачайте python3
-``` apt install python3 ```
+1. Установите python3: ``` apt install python3 ```
 3. Скачайте zip-архив с OfflineChronicle: https://github.com/b15eecdd-94d1-493a-af46-d07a236a767a/OfflineChronicle/archive/refs/heads/main.zip
 4. Распакуйте в любой каталог.
 5. Откройте консоль и выберите каталог в котором находится OfflineChronicle.
-6. Скачайте зависимости
-``` pip install -r requirements.txt ```
+6. Скачайте зависимости ``` pip install -r requirements.txt ```
 7. Запускайте любой скрипт командой python3.
    
 ## Windows
